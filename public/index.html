@@ -220,7 +220,11 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
       <div class="kv"><div class="k">공모부문</div><div class="v" id="rvCategory"></div></div>
       <div class="kv" style="grid-column:1/-1"><div class="k">사진 제목</div><div class="v" id="rvTitle"></div></div>
       <div class="kv" style="grid-column:1/-1"><div class="k">간단한 설명</div><div class="v" id="rvDesc"></div></div>
-      <div class="kv" style="grid-column:1/-1"><div class="k">사진 파일</div><div class="v" id="rvFile"></div></div>
+      <div class="kv" style="grid-column:1/-1">
+        <div class="k">사진 파일</div>
+        <div class="v" id="rvFile"></div>
+        <img id="rvThumb" style="margin-top:12px; max-width:100%; max-height:300px; border-radius:12px; border:1px solid rgba(0,142,144,.16); display:none; object-fit:contain; background:#fff" alt="사진 썸네일" />
+      </div>
       <div class="kv" style="grid-column:1/-1"><div class="k">개인정보·초상권 동의</div><div class="v" id="rvAgree"></div></div>
     </div>
   </div>
@@ -387,6 +391,12 @@ goReviewBtn.addEventListener("click",async ()=>{
   $("rvTitle").textContent=v.title;
   $("rvDesc").textContent=v.desc;
   $("rvFile").textContent=`${selectedFile.name} (${formatBytes(selectedFile.size)})`;
+  if(currentObjectUrl){
+    $("rvThumb").src = currentObjectUrl;
+    $("rvThumb").style.display = "block";
+  } else {
+    $("rvThumb").style.display = "none";
+  }
   $("rvAgree").textContent=v.agree?"동의함":"미동의";
 
   form.style.display="none"; reviewSection.style.display="block";
