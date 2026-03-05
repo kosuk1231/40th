@@ -134,6 +134,11 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
       <input id="org" name="org" type="text" placeholder="예: ○○종합사회복지관 (선택)" />
     </div>
     <div>
+      <label for="birth">생년월일<span class="req">*</span></label>
+      <input id="birth" name="birth" type="text" inputmode="numeric" maxlength="6" placeholder="예: 901222" required />
+      <div class="hint">6자리 숫자 (예: 901222)</div>
+    </div>
+    <div>
       <label for="phone">연락처<span class="req">*</span></label>
       <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="예: 010-1234-5678" required />
       <div class="hint">하이픈(-) 포함/미포함 모두 가능</div>
@@ -220,9 +225,10 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
     <div class="reviewGrid">
       <div class="kv"><div class="k">이름</div><div class="v" id="rvName"></div></div>
       <div class="kv"><div class="k">소속(기관)명</div><div class="v muted" id="rvOrg"></div></div>
+      <div class="kv"><div class="k">생년월일</div><div class="v" id="rvBirth"></div></div>
       <div class="kv"><div class="k">연락처</div><div class="v" id="rvPhone"></div></div>
       <div class="kv"><div class="k">공모부문</div><div class="v" id="rvCategory"></div></div>
-      <div class="kv" style="grid-column:1/-1"><div class="k">사진 제목</div><div class="v" id="rvTitle"></div></div>
+      <div class="kv"><div class="k">사진 제목</div><div class="v" id="rvTitle"></div></div>
       <div class="kv" style="grid-column:1/-1"><div class="k">간단한 설명</div><div class="v" id="rvDesc"></div></div>
       <div class="kv" style="grid-column:1/-1">
         <div class="k">사진 파일</div>
@@ -282,7 +288,7 @@ const form=$("entryForm"), drop=$("drop"), fileMsg=$("fileMsg"),
   takePhotoBtn=$("takePhotoBtn"),
   done=$("done"), newBtn=$("newBtn"), copyBtn=$("copyBtn"), doneMsg=$("doneMsg"),
   receiptWrap=$("receiptWrap"), receiptText=$("receiptText"),
-  nameInput=$("name"), orgInput=$("org"), phoneInput=$("phone"),
+  nameInput=$("name"), orgInput=$("org"), birthInput=$("birth"), phoneInput=$("phone"),
   categorySelect=$("category"), titleInput=$("title"), descInput=$("desc"),
   agreeInput=$("agree"), logoImg=$("logoImg"), logoTextFallback=$("logoTextFallback");
 
@@ -309,6 +315,7 @@ function getFormValues(){
   const phoneRaw=phoneInput.value.trim();
   return {
     name:nameInput.value.trim(), org:orgInput.value.trim(),
+    birth:birthInput.value.trim(),
     phoneRaw, phone:normalizePhone(phoneRaw),
     category:categorySelect.value, title:titleInput.value.trim(),
     desc:descInput.value.trim(), agree:agreeInput.checked
@@ -381,7 +388,8 @@ resetBtn.addEventListener("click",resetAll);
 goReviewBtn.addEventListener("click",async ()=>{
   setMsg(submitMsg,"",""); setMsg(reviewMsg,"","");
   const v=getFormValues();
-  if(!v.name||!v.phoneRaw||!v.category||!v.title||!v.desc) return setMsg(submitMsg,"필수 항목(*)을 모두 입력해 주세요.","bad");
+  if(!v.name||!v.birth||!v.phoneRaw||!v.category||!v.title||!v.desc) return setMsg(submitMsg,"필수 항목(*)을 모두 입력해 주세요.","bad");
+  if(!/^\d{6}$/.test(v.birth)) return setMsg(submitMsg,"생년월일은 6자리 숫자로 입력해 주세요. (예: 901222)","bad");
   if(v.phone.length<10) return setMsg(submitMsg,"연락처 형식을 확인해 주세요. (예: 01012345678)","bad");
   if(!v.agree) return setMsg(submitMsg,"개인정보·초상권 동의에 체크해야 접수할 수 있습니다.","bad");
   if(!selectedFile) return setMsg(submitMsg,"사진 파일을 업로드해 주세요.","bad");
@@ -390,6 +398,7 @@ goReviewBtn.addEventListener("click",async ()=>{
 
   $("rvName").textContent=v.name;
   $("rvOrg").textContent=v.org||"미입력";
+  $("rvBirth").textContent=v.birth;
   $("rvPhone").textContent=v.phoneRaw;
   $("rvCategory").textContent=v.category;
   $("rvTitle").textContent=v.title;
@@ -435,7 +444,7 @@ finalSubmitBtn.addEventListener("click",async ()=>{
 
     const payload={
       contest:"사진공모전", name:v.name, org:v.org||"",
-      phone:v.phone, category:v.category, title:v.title, desc:v.desc,
+      birth:v.birth, phone:v.phone, category:v.category, title:v.title, desc:v.desc,
       agree:true,
       file:{name:file.name,type:file.type,base64},
       submittedAt:new Date().toISOString()

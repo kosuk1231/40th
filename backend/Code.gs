@@ -10,7 +10,7 @@ var DRIVE_FOLDER_ID = "1xtYb91H-D380bKUgKNntt16XXilUcP8V";
 
 // 스프레드시트 헤더 (appendRow 순서와 반드시 일치)
 var HEADERS = [
-  "접수번호","접수일시(KST)","이름","소속","연락처",
+  "접수번호","접수일시(KST)","이름","소속","생년월일","연락처",
   "공모부문","사진제목","설명","파일명","MIME","파일URL","파일ID"
 ];
 
@@ -33,6 +33,7 @@ function doPost(e) {
       now,
       body.name,
       body.org || "",
+      body.birth || "",
       body.phone,
       body.category,
       body.title,
@@ -52,9 +53,12 @@ function doPost(e) {
 
 // ─── 유효성 검사 ──────────────────────────────────────────
 function validatePayload(body) {
-  if (!body.name || !body.phone || !body.category ||
+  if (!body.name || !body.birth || !body.phone || !body.category ||
       !body.title || !body.desc) {
     throw new Error("필수값 누락");
+  }
+  if (!/^\d{6}$/.test(body.birth)) {
+    throw new Error("생년월일은 6자리 숫자여야 합니다.");
   }
   if (body.agree !== true) {
     throw new Error("개인정보·초상권 동의가 필요합니다.");
