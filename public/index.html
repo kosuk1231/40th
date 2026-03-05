@@ -110,7 +110,7 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
       <span class="badge" style="font-size:14px;padding:9px 14px;">
         <span class="k" style="font-size:13px;">&#128197;&nbsp;접수기간</span>
-        2026. 3. 9.(월) ~ 2026. 4. 10.(금)
+        2026. 3. 9.(월) ~ 2026. 4. 3.(금)
       </span>
     </div>
   </div>
@@ -177,7 +177,7 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
     <label>사진 업로드<span class="req">*</span></label>
     <div id="drop" class="drop" role="button" tabindex="0" aria-label="사진 파일 업로드">
       <p class="dropTitle">사진 파일을 선택하거나 끌어다 놓으세요</p>
-      <p class="dropSub">지원 형식: JPEG/JPG/PNG · 최대 10MB</p>
+      <p class="dropSub">지원 형식: JPEG/JPG/PNG · 용량: 2MB ~ 10MB</p>
       <div class="mobileActions">
         <button type="button" class="btn small" id="pickGalleryBtn">사진첩에서 선택</button>
         <button type="button" class="btn small lime" id="takePhotoBtn">카메라로 촬영</button>
@@ -188,9 +188,9 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
     <input id="photoCamera" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" capture="environment" style="display:none" />
     <div class="hint" style="margin-top:10px">
       <b>사진 기준</b><br/>
-      • 파일 형식: JPEG / JPG / PNG<br/>
-      • 용량: 최대 <b>10MB</b><br/>
-      • 제출자는 초상권 동의를 확보한 사진만 제출
+      &bull; 파일 형식: JPEG / JPG / PNG<br/>
+      &bull; 용량: 최소 <b>2MB</b> ~ 최대 <b>10MB</b><br/>
+      &bull; 제출자는 초상권 동의를 확보한 사진만 제출
     </div>
     <div id="fileMsg" class="msg" aria-live="polite"></div>
     <div id="preview" class="preview" style="display:none">
@@ -282,7 +282,7 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
 // ─── 설정: 배포된 Apps Script 웹앱 URL을 여기에 입력 ───
 const API_URL = "https://script.google.com/macros/s/AKfycbz_-3JNn9EzK8pHQW4Q_zBzyjS8YmV2XONOG7Op_JtHNtyvZ8P03VsvT68uPkNp5vmR/exec";
 
-const RULES = { maxBytes: 10*1024*1024, allowedTypes: ["image/jpeg","image/png"] };
+const RULES = { minBytes: 2*1024*1024, maxBytes: 10*1024*1024, allowedTypes: ["image/jpeg","image/png"] };
 
 // ─── DOM 참조 ─────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -339,6 +339,9 @@ async function validateAndPreview(file){
   if(!file) return false;
   if(!RULES.allowedTypes.includes(file.type)){
     setMsg(fileMsg,"지원하지 않는 파일 형식입니다. (JPEG/JPG/PNG만 가능)","bad"); return false;
+  }
+  if(file.size<RULES.minBytes){
+    setMsg(fileMsg,`파일 용량이 너무 작습니다. (현재 ${formatBytes(file.size)} / 최소 ${formatBytes(RULES.minBytes)})`,"bad"); return false;
   }
   if(file.size>RULES.maxBytes){
     setMsg(fileMsg,`파일 용량이 너무 큽니다. (현재 ${formatBytes(file.size)} / 최대 ${formatBytes(RULES.maxBytes)})`,"bad"); return false;
