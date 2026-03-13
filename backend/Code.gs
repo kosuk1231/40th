@@ -24,7 +24,20 @@ function doPost(e) {
     var body = JSON.parse(e.postData.contents);
     validatePayload(body);
 
-    var file     = saveFileToDrive(body.file, body.name);
+    var fileNames = [];
+    var fileMimes = [];
+    var fileUrls  = [];
+    var fileIds   = [];
+
+    // Save up to 3 files
+    for (var i = 0; i < body.files.length; i++) {
+      var file = saveFileToDrive(body.files[i], body.name);
+      fileNames.push(body.files[i].name);
+      fileMimes.push(body.files[i].type);
+      fileUrls.push(file.url);
+      fileIds.push(file.id);
+    }
+
     var receipt  = generateReceiptId();
     var now      = formatKST(new Date());
 
@@ -35,13 +48,13 @@ function doPost(e) {
       body.org || "",
       body.birth || "",
       body.phone,
-      body.category,
+      "", // 공모부문 (삭제됨, 구조 유지를 위해 빈 값)
       body.title,
       body.desc,
-      body.file.name,
-      body.file.type,
-      file.url,
-      file.id
+      fileNames.join("\n"),
+      fileMimes.join("\n"),
+      fileUrls.join("\n"),
+      fileIds.join("\n")
     ]);
 
     return jsonResponse({ ok: true, receiptId: receipt });
@@ -53,8 +66,7 @@ function doPost(e) {
 
 // ─── 유효성 검사 ──────────────────────────────────────────
 function validatePayload(body) {
-  if (!body.name || !body.birth || !body.phone || !body.category ||
-      !body.title || !body.desc) {
+  if (!body.name || !body.birth || !body.phone || !body.title || !body.desc) {
     throw new Error("필수값 누락");
   }
   if (!/^\d{6}$/.test(body.birth)) {
@@ -63,16 +75,25 @@ function validatePayload(body) {
   if (body.agree !== true) {
     throw new Error("개인정보·초상권 동의가 필요합니다.");
   }
-  if (!body.file || !body.file.base64 || !body.file.name || !body.file.type) {
+  if (!body.files || !Array.isArray(body.files) || body.files.length === 0) {
     throw new Error("사진 파일 정보가 누락되었습니다.");
   }
-  if (ALLOWED_TYPES.indexOf(body.file.type) === -1) {
-    throw new Error("지원하지 않는 파일 형식입니다. (JPEG/PNG만 가능)");
+  if (body.files.length > 3) {
+    throw new Error("사진은 최대 3장까지 제출 가능합니다.");
   }
-  // Base64 크기 → 원본 크기 추정
-  var estimatedBytes = Math.ceil(body.file.base64.length * 3 / 4);
-  if (estimatedBytes > MAX_BYTES) {
-    throw new Error("파일 용량이 10MB를 초과합니다.");
+  
+  for (var i = 0; i < body.files.length; i++) {
+    var fileData = body.files[i];
+    if (!fileData.base64 || !fileData.name || !fileData.type) {
+      throw new Error("사진 파일 정보가 불완전합니다.");
+    }
+    if (ALLOWED_TYPES.indexOf(fileData.type) === -1) {
+      throw new Error("지원하지 않는 파일 형식입니다. (JPEG/PNG만 가능)");
+    }
+    var estimatedBytes = Math.ceil(fileData.base64.length * 3 / 4);
+    if (estimatedBytes > MAX_BYTES) {
+      throw new Error(fileData.name + " 파일 용량이 10MB를 초과합니다.");
+    }
   }
 }
 

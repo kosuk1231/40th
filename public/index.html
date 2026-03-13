@@ -11,6 +11,27 @@
   --line:rgba(0,142,144,.18); --danger:#dc2626; --ok:#16a34a;
   --shadow:0 14px 30px rgba(0,142,144,.14),0 8px 18px rgba(0,0,0,.06);
 }
+.polaroid-wrapper {
+  display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 30px; margin-bottom: 10px;
+}
+.polaroid {
+  background: #fff; padding: 10px 10px 25px 10px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); border-radius: 2px;
+  width: 180px; transition: transform 0.3s;
+}
+.polaroid:nth-child(1) { transform: rotate(-4deg); }
+.polaroid:nth-child(2) { transform: rotate(2deg); margin-top: 10px; }
+.polaroid:nth-child(3) { transform: rotate(-2deg); margin-top: 5px; }
+.polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; position: relative; }
+.polaroid img { width: 100%; height: auto; display: block; }
+.info-box {
+  background: rgba(0,142,144,0.04); border: 1px solid rgba(0,142,144,0.15);
+  border-radius: 14px; padding: 18px; margin-top: 15px;
+}
+.info-box h3 { margin: 0 0 10px; font-size: 15px; color: var(--teal); display: inline-block; border-bottom: 2px solid var(--lime); padding-bottom: 2px; }
+.info-box ul { margin: 0 0 15px; padding-left: 20px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.info-box ul:last-child { margin-bottom: 0; }
+.info-box li { margin-bottom: 4px; }
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial,sans-serif;
   background:radial-gradient(1200px 650px at 12% -12%,rgba(0,142,144,.22),transparent 60%),
@@ -124,65 +145,51 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
 
 <!-- ═══ HEADER ═══ -->
 <header>
-  <div class="brandbar">
+  <div class="brandbar" style="align-items: flex-start;">
     <a href="https://www.sasw.or.kr/" target="_blank" rel="noopener noreferrer" class="logo-link" id="logoLink" title="서울특별시사회복지사협회 홈페이지">
       <img id="logoImg"
-        src="LOGO.png"
-        alt="서울특별시사회복지사협회 로고" loading="eager" decoding="async" />
+        src="assets/LOGO.png"
+        alt="서울특별시사회복지사협회 로고" loading="eager" decoding="async" referrerpolicy="no-referrer" style="max-height: 54px;" />
       <span id="logoTextFallback" class="logo-fallback">서울특별시사회복지사협회</span>
     </a>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
-      <span class="badge" style="font-size:14px;padding:9px 14px;">
-        <span class="k" style="font-size:13px;">&#128197;&nbsp;접수기간</span>
-        2026. 3. 16.(월) ~ 2026. 4. 3.(금)
+      <span class="badge" style="font-size:14.5px;padding:8px 14px;background:#e4f0e6;border:1px solid #c3dec6;color:#0f381c;">
+        <span class="k" style="font-size:13px;background:none;border:none;padding:0;color:#855a5a;font-weight:900;">&#128197;&nbsp;접수기간</span>
+        <b style="color:#0f381c;font-weight:900;letter-spacing:-0.3px;">2026. 3. 16.(월) ~ 2026. 4. 3.(금)</b>
       </span>
     </div>
   </div>
-  <img src="1.png" alt="서울특별시사회복지사협회 창립40주년 기념 사진공모전" style="width:100%;max-width:100%;height:auto;display:block;margin:10px 0 4px;border-radius:8px" />
-  <p class="sub" style="font-size:16px; color:#1e293b; line-height:1.6; word-break:keep-all; margin-top:14px; white-space:normal;">
-    2026년 4월 22일은 서울특별시사회복지사협회 창립 40주년입니다.<br/>
-    협회는 회원 조직으로서 40년간 회원들과 함께 성장했습니다.<br/>
-    창립40주년을 맞아 회원 여러분이 협회와 함께한 사진을 보내주세요.<br/>
-    회원님의 소중한 사진이 협회의 역사이자, 현재이고, 미래입니다.
-  </p>
-  <p class="sub" style="font-size:16px; font-weight:800; color:#1e293b; line-height:1.75; white-space:normal; margin-top:10px; padding:20px 24px; background:rgba(0,142,144,.06); border-radius:14px; border:1px solid rgba(0,142,144,.14);">
-    - 협회와의 첫 만남이 담긴 사진<br/>
-    - 협회 교육 및 행사 등 참여했던 사진<br/>
-    - 협회와 함께한 의미 있는 추억의 사진 등
-  </p>
+  <img src="assets/1.png" alt="서울특별시사회복지사협회 창립40주년 기념 사진공모전" style="width:100%; height:auto; border-radius:12px; margin-bottom:10px;" />
+  <ul style="margin: 0 0 15px; padding-left: 20px; color: var(--text); font-size: 15px; font-weight:800; line-height: 1.7;">
+    <li>협회와의 첫 만남이 담긴 사진</li>
+    <li>협회 교육 및 행사 등 참여했던 사진</li>
+    <li>협회와 함께한 의미 있는 추억의 사진 등</li>
+  </ul>
 
-  <!-- ═══ 발표 및 선정 섹션 ═══ -->
-  <div class="announce-section">
-    <div class="announce-grid">
-      <div class="announce-box">
-        <h3><span class="tag">발표</span></h3>
-        <ul>
-          <li>1차 결과 발표: 2026. 4. 22.(수)</li>
-          <li>최종 선정 방식: 1차 선정작 대상 온라인 투표 진행</li>
-          <li>최종 결과 발표: 2026. 4. 27.(월)</li>
-        </ul>
-      </div>
-      <div class="announce-box">
-        <h3><span class="tag">선정</span></h3>
-        <ul>
-          <li>대상 1명: 모바일 상품권 20만원</li>
-          <li>최우수상 1명: 모바일 상품권 15만원</li>
-          <li>우수상 1명: 모바일 상품권 10만원</li>
-          <li>장려상 1명: 모바일 상품권 5만원</li>
-          <li>참여상 36명: 모바일 커피쿠폰</li>
-        </ul>
-      </div>
-    </div>
-    <p class="announce-note">※ 40주년 기념, 총 40명 선정!</p>
+  <div class="info-box">
+    <h3>발표</h3>
+    <ul>
+      <li>1차 결과 발표: 2026. 4. 22.(수)</li>
+      <li>최종 선정 방식: 1차 선정작 대상 온라인 투표 진행</li>
+      <li>최종 결과 발표: 2026. 4. 27.(월)</li>
+    </ul>
+    <h3>선정</h3>
+    <ul>
+      <li>대상 1명: 모바일 상품권 20만원</li>
+      <li>최우수상 1명: 모바일 상품권 15만원</li>
+      <li>우수상 1명: 모바일 상품권 10만원</li>
+      <li>장려상 1명: 모바일 상품권 5만원</li>
+      <li>참여상 36명: 모바일 커피쿠폰</li>
+    </ul>
+    <p style="margin: 8px 0 0; font-weight: 900; color: var(--danger); font-size: 14px;">※ 40주년 기념, 총 40명 선정!</p>
   </div>
-
 </header>
 
 <!-- ═══ 폴라로이드 사진 섹션 ═══ -->
 <div class="photos-section">
   <div class="polaroid-row">
     <div class="polaroid"><img src="2.jpg" alt="공모전 사진 예시 1" /></div>
-    <div class="polaroid"><img src="3.jpg" alt="공모전 사진 예시 2" /></div>
+    <div class="polaroid"><img src="3.png" alt="공모전 사진 예시 2" /></div>
     <div class="polaroid"><img src="4.jpg" alt="공모전 사진 예시 3" /></div>
   </div>
 </div>
@@ -208,16 +215,7 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
       <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="예: 010-1234-5678" required />
       <div class="hint">하이픈(-) 포함/미포함 모두 가능</div>
     </div>
-    <div>
-      <label for="category">공모부문<span class="req">*</span></label>
-      <select id="category" name="category" required>
-        <option value="" selected disabled>부문을 선택해 주세요</option>
-        <option value="함께한추억상">함께한추억상: 40주년의 시간과 협회의 발자취가 드러나는 사진</option>
-        <option value="현장의순간상">현장의순간상: 협회가 주최·운영한 행사, 교육, 사업 등 활동 현장이 잘 표현된 사진</option>
-        <option value="실천의모범상">실천의모범상: 서울사회복지사들의 전문성과 실천 현장이 잘 드러난 사진</option>
-      </select>
-    </div>
-    <div>
+    <div style="grid-column:1/-1">
       <label for="title">사진 제목<span class="req">*</span></label>
       <input id="title" name="title" type="text" placeholder="예: 함께여서 가능한 하루" required />
     </div>
@@ -240,20 +238,18 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
         <button type="button" class="btn small lime" id="takePhotoBtn">카메라로 촬영</button>
       </div>
     </div>
-    <input id="photoPicker" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
-    <input id="photoGallery" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
-    <input id="photoCamera" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" capture="environment" style="display:none" />
+    <input id="photoPicker" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
+    <input id="photoGallery" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
+    <input id="photoCamera" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" capture="environment" style="display:none" />
     <div class="hint" style="margin-top:10px">
       <b>사진 기준</b><br/>
+      &bull; <b>최대 3장</b> 업로드 가능<br/>
       &bull; 파일 형식: JPEG / JPG / PNG<br/>
-      &bull; 용량: 최소 <b>2MB</b> ~ 최대 <b>10MB</b><br/>
+      &bull; 용량: 최소 <b>2MB</b> ~ 최대 <b>10MB</b> (장당)<br/>
       &bull; 제출자는 초상권 동의를 확보한 사진만 제출
     </div>
     <div id="fileMsg" class="msg" aria-live="polite"></div>
-    <div id="preview" class="preview" style="display:none">
-      <div class="thumb" id="thumb"></div>
-      <div class="meta" id="meta"></div>
-    </div>
+    <div id="previewContainer" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;"></div>
   </div>
 
   <div style="height:14px"></div>
@@ -281,6 +277,13 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
       <button type="button" class="btn lime" id="goReviewBtn">제출하기</button>
     </div>
   </div>
+
+  <div class="polaroid-wrapper">
+    <div class="polaroid"><img src="assets/2.jpg" alt="사진 1" /></div>
+    <div class="polaroid"><img src="assets/3.png" alt="사진 2" /></div>
+    <div class="polaroid"><img src="assets/4.jpg" alt="사진 3" /></div>
+  </div>
+  
   <div id="submitMsg" class="msg" aria-live="polite"></div>
 </form>
 
@@ -293,13 +296,11 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
       <div class="kv"><div class="k">소속(기관)명</div><div class="v muted" id="rvOrg"></div></div>
       <div class="kv"><div class="k">생년월일</div><div class="v" id="rvBirth"></div></div>
       <div class="kv"><div class="k">연락처</div><div class="v" id="rvPhone"></div></div>
-      <div class="kv"><div class="k">공모부문</div><div class="v" id="rvCategory"></div></div>
-      <div class="kv"><div class="k">사진 제목</div><div class="v" id="rvTitle"></div></div>
+      <div class="kv" style="grid-column:1/-1"><div class="k">사진 제목</div><div class="v" id="rvTitle"></div></div>
       <div class="kv" style="grid-column:1/-1"><div class="k">간단한 설명</div><div class="v" id="rvDesc"></div></div>
       <div class="kv" style="grid-column:1/-1">
         <div class="k">사진 파일</div>
-        <div class="v" id="rvFile"></div>
-        <img id="rvThumb" style="margin-top:12px; max-width:100%; max-height:300px; border-radius:12px; border:1px solid rgba(0,142,144,.16); display:none; object-fit:contain; background:#fff" alt="사진 썸네일" />
+        <div id="rvFilesContainer" style="display:flex;flex-direction:column;gap:12px;margin-top:8px;"></div>
       </div>
       <div class="kv" style="grid-column:1/-1"><div class="k">개인정보·초상권 동의</div><div class="v" id="rvAgree"></div></div>
     </div>
@@ -344,7 +345,7 @@ const RULES = { minBytes: 2*1024*1024, maxBytes: 10*1024*1024, allowedTypes: ["i
 // ─── DOM 참조 ─────────────────────────────────────────
 const $ = id => document.getElementById(id);
 const form=$("entryForm"), drop=$("drop"), fileMsg=$("fileMsg"),
-  preview=$("preview"), thumb=$("thumb"), meta=$("meta"),
+  previewContainer=$("previewContainer"),
   submitMsg=$("submitMsg"), resetBtn=$("resetBtn"),
   goReviewBtn=$("goReviewBtn"),
   reviewSection=$("reviewSection"), backEditBtn=$("backEditBtn"),
@@ -355,10 +356,11 @@ const form=$("entryForm"), drop=$("drop"), fileMsg=$("fileMsg"),
   done=$("done"), newBtn=$("newBtn"), copyBtn=$("copyBtn"), doneMsg=$("doneMsg"),
   receiptWrap=$("receiptWrap"), receiptText=$("receiptText"),
   nameInput=$("name"), orgInput=$("org"), birthInput=$("birth"), phoneInput=$("phone"),
-  categorySelect=$("category"), titleInput=$("title"), descInput=$("desc"),
-  agreeInput=$("agree"), logoImg=$("logoImg"), logoTextFallback=$("logoTextFallback");
+  titleInput=$("title"), descInput=$("desc"),
+  agreeInput=$("agree"), logoImg=$("logoImg"), logoTextFallback=$("logoTextFallback"),
+  rvFilesContainer=$("rvFilesContainer"), rvFileCount=$("rvFileCount");
 
-let currentObjectUrl=null, receiptId="", selectedFile=null, logoTriedFallback=false;
+let currentObjectUrls=[], receiptId="", selectedFiles=[], logoTriedFallback=false;
 
 // ─── 유틸 ─────────────────────────────────────────────
 const isMobile = () => window.matchMedia("(max-width:760px)").matches;
@@ -383,47 +385,70 @@ function getFormValues(){
     name:nameInput.value.trim(), org:orgInput.value.trim(),
     birth:birthInput.value.trim(),
     phoneRaw, phone:normalizePhone(phoneRaw),
-    category:categorySelect.value, title:titleInput.value.trim(),
+    title:titleInput.value.trim(),
     desc:descInput.value.trim(), agree:agreeInput.checked
   };
 }
 
 // ─── 파일 미리보기 + 검증 ─────────────────────────────
-async function validateAndPreview(file){
-  setMsg(fileMsg,"",""); preview.style.display="none";
-  thumb.innerHTML=""; meta.textContent="";
+async function validateAndPreview(filesList){
+  setMsg(fileMsg,"",""); previewContainer.innerHTML="";
   setMsg(submitMsg,"",""); setMsg(reviewMsg,"","");
-  if(!file) return false;
-  if(!RULES.allowedTypes.includes(file.type)){
-    setMsg(fileMsg,"지원하지 않는 파일 형식입니다. (JPEG/JPG/PNG만 가능)","bad"); return false;
+  if(!filesList || filesList.length===0) return false;
+
+  const tempFiles = Array.from(filesList).slice(0, 3);
+  
+  currentObjectUrls.forEach(url => URL.revokeObjectURL(url));
+  currentObjectUrls=[];
+  selectedFiles=[];
+
+  for(let i=0; i<tempFiles.length; i++) {
+    const file = tempFiles[i];
+    if(!RULES.allowedTypes.includes(file.type)){
+      setMsg(fileMsg,"지원하지 않는 파일 형식입니다. (JPEG/JPG/PNG만 가능)","bad"); return false;
+    }
+    if(file.size<RULES.minBytes){
+      setMsg(fileMsg,`파일 용량이 너무 작습니다. (현재 ${formatBytes(file.size)} / 최소 ${formatBytes(RULES.minBytes)})`,"bad"); return false;
+    }
+    if(file.size>RULES.maxBytes){
+      setMsg(fileMsg,`파일 용량이 너무 큽니다. (현재 ${formatBytes(file.size)} / 최대 ${formatBytes(RULES.maxBytes)})`,"bad"); return false;
+    }
+    try{
+      const {width,height,url}=await loadImageSize(file);
+      currentObjectUrls.push(url);
+      selectedFiles.push(file);
+
+      const thumbItem = document.createElement("div");
+      thumbItem.className = "preview";
+      thumbItem.style.display = "grid";
+      
+      const thumbDiv = document.createElement("div");
+      thumbDiv.className = "thumb";
+      const img=document.createElement("img"); img.alt="미리보기"; img.src=url;
+      thumbDiv.appendChild(img);
+      
+      const metaDiv = document.createElement("div");
+      metaDiv.className = "meta";
+      metaDiv.innerHTML=`파일명: <b>${file.name}</b><br/>형식: ${file.type}<br/>용량: ${formatBytes(file.size)}<br/>해상도: ${width}×${height}px`;
+      
+      thumbItem.appendChild(thumbDiv);
+      thumbItem.appendChild(metaDiv);
+      previewContainer.appendChild(thumbItem);
+    }catch{
+      setMsg(fileMsg,"이미지 파일 확인 중 오류가 발생했습니다.","bad"); return false;
+    }
   }
-  if(file.size<RULES.minBytes){
-    setMsg(fileMsg,`파일 용량이 너무 작습니다. (현재 ${formatBytes(file.size)} / 최소 ${formatBytes(RULES.minBytes)})`,"bad"); return false;
-  }
-  if(file.size>RULES.maxBytes){
-    setMsg(fileMsg,`파일 용량이 너무 큽니다. (현재 ${formatBytes(file.size)} / 최대 ${formatBytes(RULES.maxBytes)})`,"bad"); return false;
-  }
-  try{
-    const {width,height,url}=await loadImageSize(file);
-    if(currentObjectUrl) URL.revokeObjectURL(currentObjectUrl);
-    currentObjectUrl=url;
-    const img=document.createElement("img"); img.alt="미리보기"; img.src=url;
-    thumb.appendChild(img);
-    meta.innerHTML=`파일명: <b>${file.name}</b><br/>형식: ${file.type}<br/>용량: ${formatBytes(file.size)}<br/>해상도: ${width}×${height}px`;
-    preview.style.display="grid";
-    setMsg(fileMsg,"사진이 선택되었습니다.","ok");
-    selectedFile=file; return true;
-  }catch{
-    setMsg(fileMsg,"이미지 파일 확인 중 오류가 발생했습니다.","bad"); return false;
-  }
+
+  setMsg(fileMsg,`${selectedFiles.length}장의 사진이 선택되었습니다.` + (filesList.length>3?" (최대 3장까지만 적용됨)":""),"ok");
+  return true;
 }
 
 // ─── 초기화 ───────────────────────────────────────────
 function resetAll(){
   form.reset(); photoPicker.value=""; photoGallery.value=""; photoCamera.value="";
-  selectedFile=null; setMsg(fileMsg,"",""); setMsg(submitMsg,"",""); setMsg(reviewMsg,"","");
-  preview.style.display="none"; thumb.innerHTML=""; meta.textContent="";
-  if(currentObjectUrl) URL.revokeObjectURL(currentObjectUrl); currentObjectUrl=null;
+  selectedFiles=[]; setMsg(fileMsg,"",""); setMsg(submitMsg,"",""); setMsg(reviewMsg,"","");
+  previewContainer.innerHTML="";
+  currentObjectUrls.forEach(url => URL.revokeObjectURL(url)); currentObjectUrls=[];
   receiptId=""; receiptText.textContent=""; receiptWrap.style.display="none"; doneMsg.textContent="";
   reviewSection.style.display="none"; done.style.display="none"; form.style.display="block";
 }
@@ -440,16 +465,16 @@ if(logoImg){
 // ─── 파일 선택 이벤트 ─────────────────────────────────
 drop.addEventListener("click",()=>{if(!isMobile()) photoPicker.click()});
 drop.addEventListener("keydown",e=>{if(!isMobile()&&(e.key==="Enter"||e.key===" ")){e.preventDefault();photoPicker.click()}});
-photoPicker.addEventListener("change",async e=>{await validateAndPreview(e.target.files?.[0])});
+photoPicker.addEventListener("change",async e=>{await validateAndPreview(e.target.files)});
 pickGalleryBtn.addEventListener("click",()=>photoGallery.click());
 takePhotoBtn.addEventListener("click",()=>photoCamera.click());
-photoGallery.addEventListener("change",async e=>{await validateAndPreview(e.target.files?.[0])});
-photoCamera.addEventListener("change",async e=>{await validateAndPreview(e.target.files?.[0])});
+photoGallery.addEventListener("change",async e=>{await validateAndPreview(e.target.files)});
+photoCamera.addEventListener("change",async e=>{await validateAndPreview(e.target.files)});
 
 // 드래그 앤 드롭
 ["dragenter","dragover"].forEach(evt=>drop.addEventListener(evt,e=>{e.preventDefault();if(!isMobile())drop.classList.add("drag")}));
 ["dragleave","drop"].forEach(evt=>drop.addEventListener(evt,e=>{e.preventDefault();drop.classList.remove("drag")}));
-drop.addEventListener("drop",async e=>{if(isMobile())return;const f=e.dataTransfer.files?.[0];if(f)await validateAndPreview(f)});
+drop.addEventListener("drop",async e=>{if(isMobile())return;const f=e.dataTransfer.files;if(f && f.length>0)await validateAndPreview(f)});
 
 resetBtn.addEventListener("click",resetAll);
 
@@ -457,28 +482,29 @@ resetBtn.addEventListener("click",resetAll);
 goReviewBtn.addEventListener("click",async ()=>{
   setMsg(submitMsg,"",""); setMsg(reviewMsg,"","");
   const v=getFormValues();
-  if(!v.name||!v.birth||!v.phoneRaw||!v.category||!v.title||!v.desc) return setMsg(submitMsg,"필수 항목(*)을 모두 입력해 주세요.","bad");
+  if(!v.name||!v.birth||!v.phoneRaw||!v.title||!v.desc) return setMsg(submitMsg,"필수 항목(*)을 모두 입력해 주세요.","bad");
   if(!/^\d{6}$/.test(v.birth)) return setMsg(submitMsg,"생년월일은 6자리 숫자로 입력해 주세요. (예: 901222)","bad");
   if(v.phone.length<10) return setMsg(submitMsg,"연락처 형식을 확인해 주세요. (예: 01012345678)","bad");
   if(!v.agree) return setMsg(submitMsg,"개인정보·초상권 동의에 체크해야 접수할 수 있습니다.","bad");
-  if(!selectedFile) return setMsg(submitMsg,"사진 파일을 업로드해 주세요.","bad");
-  const ok=await validateAndPreview(selectedFile);
-  if(!ok) return setMsg(submitMsg,"사진 파일을 다시 선택해 주세요.","bad");
+  if(selectedFiles.length===0) return setMsg(submitMsg,"사진 파일을 업로드해 주세요.","bad");
 
   $("rvName").textContent=v.name;
   $("rvOrg").textContent=v.org||"미입력";
   $("rvBirth").textContent=v.birth;
   $("rvPhone").textContent=v.phoneRaw;
-  $("rvCategory").textContent=v.category;
   $("rvTitle").textContent=v.title;
   $("rvDesc").textContent=v.desc;
-  $("rvFile").textContent=`${selectedFile.name} (${formatBytes(selectedFile.size)})`;
-  if(currentObjectUrl){
-    $("rvThumb").src = currentObjectUrl;
-    $("rvThumb").style.display = "block";
-  } else {
-    $("rvThumb").style.display = "none";
-  }
+
+  if (rvFileCount) rvFileCount.textContent = selectedFiles.length;
+  rvFilesContainer.innerHTML = "";
+  selectedFiles.forEach((file, idx) => {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `<div class="v" style="margin-bottom:8px">${file.name} (${formatBytes(file.size)})</div>
+      <div class="thumb" style="width:100px;height:100px;border-radius:12px;margin-bottom:12px;border:1px dashed #cbd5e1;box-shadow:none;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff">
+        <img src="${currentObjectUrls[idx]}" style="max-width:100%;max-height:100%;object-fit:cover;" alt="썸네일" />
+      </div>`;
+    rvFilesContainer.appendChild(wrapper);
+  });
   $("rvAgree").textContent=v.agree?"동의함":"미동의";
 
   form.style.display="none"; reviewSection.style.display="block";
@@ -508,14 +534,22 @@ finalSubmitBtn.addEventListener("click",async ()=>{
   setMsg(reviewMsg,"최종 제출 중입니다… 잠시만 기다려 주세요.","");
 
   try{
-    const v=getFormValues(), file=selectedFile;
-    const base64=await fileToBase64(file);
+    const v=getFormValues();
+    const filesArray = [];
+    for(let i=0; i<selectedFiles.length; i++){
+      const base64 = await fileToBase64(selectedFiles[i]);
+      filesArray.push({
+        name: selectedFiles[i].name,
+        type: selectedFiles[i].type,
+        base64: base64
+      });
+    }
 
     const payload={
       contest:"사진공모전", name:v.name, org:v.org||"",
-      birth:v.birth, phone:v.phone, category:v.category, title:v.title, desc:v.desc,
+      birth:v.birth, phone:v.phone, title:v.title, desc:v.desc,
       agree:true,
-      file:{name:file.name,type:file.type,base64},
+      files:filesArray,
       submittedAt:new Date().toISOString()
     };
 
