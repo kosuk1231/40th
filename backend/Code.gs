@@ -29,7 +29,7 @@ function doPost(e) {
     var fileUrls  = [];
     var fileIds   = [];
 
-    // Save up to 3 files
+    // Save up to 1 file
     for (var i = 0; i < body.files.length; i++) {
       var file = saveFileToDrive(body.files[i], body.name);
       fileNames.push(body.files[i].name);
@@ -78,8 +78,8 @@ function validatePayload(body) {
   if (!body.files || !Array.isArray(body.files) || body.files.length === 0) {
     throw new Error("사진 파일 정보가 누락되었습니다.");
   }
-  if (body.files.length > 3) {
-    throw new Error("사진은 최대 3장까지 제출 가능합니다.");
+  if (body.files.length > 1) {
+    throw new Error("사진은 최대 1장까지 제출 가능합니다.");
   }
   
   for (var i = 0; i < body.files.length; i++) {

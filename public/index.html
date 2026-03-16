@@ -245,12 +245,12 @@ textarea::placeholder,input::placeholder{font-family:inherit;font-size:15px;colo
         <button type="button" class="btn small lime" id="takePhotoBtn">카메라로 촬영</button>
       </div>
     </div>
-    <input id="photoPicker" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
-    <input id="photoGallery" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
-    <input id="photoCamera" type="file" multiple accept="image/jpeg,image/png,.jpg,.jpeg,.png" capture="environment" style="display:none" />
+    <input id="photoPicker" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
+    <input id="photoGallery" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" style="display:none" />
+    <input id="photoCamera" type="file" accept="image/jpeg,image/png,.jpg,.jpeg,.png" capture="environment" style="display:none" />
     <div class="hint" style="margin-top:10px">
       <b>사진 기준</b><br/>
-      &bull; <b>최대 3장</b> 업로드 가능<br/>
+      &bull; <b>최대 1장</b> 업로드 가능<br/>
       &bull; 파일 형식: JPEG / JPG / PNG<br/>
       &bull; 용량: 최소 <b>2MB</b> ~ 최대 <b>10MB</b> (장당)<br/>
       &bull; 제출자는 초상권 동의를 확보한 사진만 제출
@@ -399,8 +399,8 @@ async function validateAndPreview(filesList){
 
   const newFiles = Array.from(filesList);
   
-  if(selectedFiles.length + newFiles.length > 3) {
-    setMsg(fileMsg, "최대 3장까지만 업로드할 수 있습니다. 필요시 기존 사진을 제거해주세요.", "bad");
+  if(selectedFiles.length + newFiles.length > 1) {
+    setMsg(fileMsg, "최대 1장까지만 업로드할 수 있습니다. 필요시 기존 사진을 제거해주세요.", "bad");
     return false;
   }
 
